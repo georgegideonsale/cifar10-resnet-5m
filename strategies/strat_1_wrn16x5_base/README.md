@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | none |
 | Status | submitted |
 | Kaggle | `submission_strat_1.csv`, submitted 2026-10-31 03:04 UTC, public LB 0.866, Kaggle ID 57824717 |
