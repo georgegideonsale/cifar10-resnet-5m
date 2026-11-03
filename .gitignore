@@ -1,0 +1,21 @@
+# Competition data: Kaggle terms do not allow redistribution
+data/*
+!data/README.md
+packed/*.npz
+
+# Intermediate files
+ckpt_last.pt
+outputs_smoke/
+smoke*/
+repro/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
