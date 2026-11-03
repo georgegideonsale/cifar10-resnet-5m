@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | strat_13 (ResNet + RegMixup, 200 epochs, not in this repo) |
 | Status | submitted (seed 0) |
 | Kaggle | `3_strat_26_s0_flip.csv`, submitted 2026-11-02 23:52 UTC, public LB 0.898, Kaggle ID 57924531 |
