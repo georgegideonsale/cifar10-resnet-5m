@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | [strat_6](../strat_6_wrn16x5_regmixup_s1) |
 | Status | submitted |
 | Kaggle | `submission_strat_9.csv`, submitted 2026-11-01 02:19 UTC, public LB 0.876, Kaggle ID 57857631 |
