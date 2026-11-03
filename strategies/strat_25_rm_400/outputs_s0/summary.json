@@ -1,0 +1,89 @@
+{
+  "strategy": "strat_25_rm_400",
+  "status": "completed",
+  "kill_reason": null,
+  "params": 4327754,
+  "members": 1,
+  "final_params": 4327754,
+  "val_acc": 0.9754,
+  "val_split": "VAL5K",
+  "val_acc_all": {
+    "live_none": 0.974,
+    "live_flip2": 0.9746,
+    "live_tta6": 0.976,
+    "ema_none": 0.9748,
+    "ema_flip2": 0.9754,
+    "ema_tta6": 0.976
+  },
+  "val_correct_all": {
+    "live_none": 4870,
+    "live_flip2": 4873,
+    "live_tta6": 4880,
+    "ema_none": 4874,
+    "ema_flip2": 4877,
+    "ema_tta6": 4880
+  },
+  "grid": {
+    "sharp2": 0.9718,
+    "contrast1.2": 0.9756,
+    "all_up": 0.9744
+  },
+  "chosen": {
+    "weights": "ema",
+    "tta": "flip2"
+  },
+  "logits_note": "test_logits/val_logits: log of the averaged softmax of the submitted weights and views.",
+  "epochs": 400,
+  "planned_epochs": 400,
+  "full_epochs": 400,
+  "steps": 70000,
+  "steps_per_epoch": 175,
+  "warmup_steps": 350,
+  "short_run": false,
+  "train_seconds": 1973.1956961160001,
+  "train_minutes": 32.88659493526667,
+  "final_eval_seconds": 5.475448036999751,
+  "epoch_seconds_mean": 4.838424025364994,
+  "time_budget_min": null,
+  "n_train": 45000,
+  "n_val": 5000,
+  "full_train": false,
+  "batch_size": 256,
+  "workers": 11,
+  "smoke": false,
+  "resumed": false,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "amp": "bf16",
+  "grad_scaler": false,
+  "channels_last": true,
+  "torch_version": "2.15.0+cu132",
+  "numpy_version": "2.5.4",
+  "python_version": "3.14.10",
+  "seed": 0,
+  "config_sha256": "3fb044fe307627795160262c19198264ede9332214ddff458c4c42b064d2c708",
+  "data_sha256": "5f3f740eb93729ac20fab44f1a85b47f51529963fb3d756b76f24b753a96c7be",
+  "sam_rho": 0.0,
+  "mix": {
+    "regmixup_alpha": 20,
+    "mixup_alpha": 0,
+    "cutmix_alpha": 0,
+    "mix_prob": 0.5
+  },
+  "kd": {
+    "ckpt": null,
+    "arch": "resnet",
+    "widths": [
+      64,
+      128,
+      256
+    ],
+    "blocks": [
+      3,
+      3,
+      3
+    ],
+    "alpha": 0.0,
+    "temperature": 1.0
+  },
+  "peak_gpu_mem_gb": 1.886713344
+}
