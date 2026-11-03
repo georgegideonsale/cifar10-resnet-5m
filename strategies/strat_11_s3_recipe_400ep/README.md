@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`); model and recipe from Tarun's S3 notebook |
+| Author | George Gideon Sale (`gs4602`); model and recipe from Tarun's S3 notebook |
 | Parent | strat_10 (the same recipe at 200 epochs, VAL5K 96.70, not submitted, not in this repo) |
 | Status | submitted |
 | Kaggle | `submission_strat_11.csv`, submitted 2026-11-01 06:17 UTC, public LB 0.882, Kaggle ID 57862406 |
