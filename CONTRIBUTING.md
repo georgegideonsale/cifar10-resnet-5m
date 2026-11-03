@@ -63,7 +63,7 @@ Then go through the checklist in [RULES.md](RULES.md). Every box must be true.
 ## 5. Record your Kaggle submissions
 
 If the strategy was submitted, add one row per submitted file to [SUBMISSIONS.md](SUBMISSIONS.md):
-date and time (UTC), your Kaggle name, the file name on Kaggle, the strategy folder, the SHA-256 of the
+date and time (UTC), your NYU net ID, the file name on Kaggle, the strategy folder, the SHA-256 of the
 file and the public score.
 
 ## 6. Git workflow

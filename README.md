@@ -7,7 +7,7 @@ The task: classify a distribution-shifted CIFAR-10 test set (2,000 images, 32x32
 at most 5,000,000 parameters, trained from scratch on the 50,000 training images provided by the course staff.
 The metric is accuracy. The final ranking uses the private half of the test set.
 
-Team members: George Gideon Sale (`georgesale`), Tarun (`tarun802`), Bhagyashree Patil (`bhagyashreepatil25`).
+Team members: George Gideon Sale (`gs4602`), Tarun (`tk3701`), Bhagyashree Patil (`bap9622`).
 
 Every strategy in this repo is meant to be reproducible on its own: the exact code that produced a Kaggle
 submission, its config, the training log, the checkpoint, the parameter count and the commands to rebuild the
