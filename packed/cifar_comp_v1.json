@@ -1,0 +1,29 @@
+{
+  "file": "cifar_comp_v1.npz",
+  "sha256": "5f3f740eb93729ac20fab44f1a85b47f51529963fb3d756b76f24b753a96c7be",
+  "bytes": 160201252,
+  "x_train": [
+    50000,
+    32,
+    32,
+    3
+  ],
+  "x_test": [
+    2000,
+    32,
+    32,
+    3
+  ],
+  "val_split": "VAL5K seed=0 per_class=500",
+  "val_idx_sha256": "e2dfe1ecb7968a0303636292c48734fec18e706d6ab3309ca2c3c182b35dd609",
+  "train_mean_rgb": [
+    0.4914,
+    0.4822,
+    0.4465
+  ],
+  "train_std_rgb": [
+    0.247,
+    0.2435,
+    0.2616
+  ]
+}
