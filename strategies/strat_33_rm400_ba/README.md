@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | [strat_25](../strat_25_rm_400) |
 | Status | submitted (seed 0) |
 | Kaggle | `4_strat_33_s0_flip.csv`, submitted 2026-11-02 23:52 UTC, public LB 0.896, Kaggle ID 57924537 |
