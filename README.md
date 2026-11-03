@@ -74,12 +74,12 @@ The `sha256` of the `.npz` file itself can differ between machines (zip metadata
 
 ## Reproduce a submission from its checkpoint
 
-Inference runs on a CPU in a few minutes. Example for strat_38:
+Inference runs on a CPU in about 2 minutes (15 minutes for strat_38). Example for strat_25:
 
 ```bash
-cd strategies/strat_38_sla_sd
-python strat_38_infer.py --config strat_38_config.yaml --data ../../packed/cifar_comp_v1.npz \
-    --out repro --ckpt outputs_s1/model.pt
+cd strategies/strat_25_rm_400
+python strat_25_infer.py --config strat_25_config.yaml --data ../../packed/cifar_comp_v1.npz \
+    --out repro --ckpt outputs_s0/model.pt
 python ../../tools/validate_submission.py repro/submission.csv
 ```
 
