@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | <name> (`<kaggle name>`) |
+| Author | <name> (`<NYU net ID>`) |
 | Parent | <id of the strategy this one changes, or "none"> |
 | Status | <submitted / not submitted / dependency of another strategy> |
 | Kaggle | <file name on Kaggle>, submitted <YYYY-MM-DD HH:MM UTC>, public LB <score>, Kaggle ID <id> |
