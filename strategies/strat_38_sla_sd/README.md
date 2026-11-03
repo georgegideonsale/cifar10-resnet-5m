@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`); the idea of using SLA came from Bhagyashree's recipe |
+| Author | George Gideon Sale (`gs4602`); the idea of using SLA came from Bhagyashree's recipe |
 | Parent | strat_12 (the strat_11 recipe at 200 epochs on an A100, not in this repo) |
 | Status | submitted (seed 1); our best public score so far |
 | Kaggle | `strat_38_s1_agg_flip2.csv`, submitted 2026-11-02 23:48 UTC, public LB 0.903, Kaggle ID 57924465 |
