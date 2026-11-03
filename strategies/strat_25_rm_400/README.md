@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | strat_13 (the same recipe at 200 epochs, not in this repo) |
 | Status | submitted (seed 0) |
 | Kaggle | `1_strat_25_s0_flip.csv`, submitted 2026-11-02 23:51 UTC, public LB 0.893, Kaggle ID 57924507 |
