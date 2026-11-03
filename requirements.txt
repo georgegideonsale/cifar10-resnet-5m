@@ -1,0 +1,7 @@
+# Tested with torch 2.11 (Kaggle, Tesla T4) and torch 2.15 (NYU HPC, A100). Any recent PyTorch 2.x should work.
+torch>=2.5
+torchvision>=0.20
+numpy>=1.26
+pandas>=2.0
+pillow>=10.0
+pyyaml>=6.0
