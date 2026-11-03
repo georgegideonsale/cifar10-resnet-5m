@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Author | George Gideon Sale (`georgesale`) |
+| Author | George Gideon Sale (`gs4602`) |
 | Parent | strat_1 recipe plus RegMixup (via strat_3, seed 0 of the same recipe, not in this repo) |
 | Status | not submitted; **dependency of [strat_9](../strat_9_s6_tta6)** |
 | Parameters | 4,289,754 |
