@@ -23,7 +23,8 @@ submission, its config, the training log, the checkpoint, the parameter count an
 | [strat_25](strategies/strat_25_rm_400) | strat_11 recipe + RegMixup | 4,327,754 | 97.54 | 89.3 | 2026-11-02 |
 | [strat_26](strategies/strat_26_rm_sam_deep_400) | ResNet 4-4-4 + RegMixup + SAM | 4,501,570 | 97.62 | 89.8 | 2026-11-02 |
 | [strat_33](strategies/strat_33_rm400_ba) | strat_25 + born-again distillation | 4,327,754 | 97.64 | 89.6 | 2026-11-02 |
-| [strat_38](strategies/strat_38_sla_sd) | ResNet 3-3-3 + rotation labels + self-distillation | 4,338,034 | 97.36 | **90.3** | 2026-11-02 |
+| [strat_38](strategies/strat_38_sla_sd) | ResNet 3-3-3 + rotation labels + self-distillation | 4,338,034 | 97.36 | 90.3 | 2026-11-02 |
+| [strat_40](strategies/strat_40_rm400_sla) | strat_25 recipe + rotation labels + self-distillation | 4,338,034 | 98.12 | **90.5** | 2026-11-03 |
 
 [strat_6](strategies/strat_6_wrn16x5_regmixup_s1) was not submitted itself. It is here because strat_9 is built
 from its saved predictions.
