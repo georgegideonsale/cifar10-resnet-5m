@@ -4,7 +4,7 @@
 |---|---|
 | Author | George Gideon Sale (`gs4602`); the idea of using SLA came from Bhagyashree's recipe |
 | Parent | strat_12 (the strat_11 recipe at 200 epochs on an A100, not in this repo) |
-| Status | submitted (seed 1); our best public score so far |
+| Status | submitted (seed 1) |
 | Kaggle | `strat_38_s1_agg_flip2.csv`, submitted 2026-11-02 23:48 UTC, public LB 0.903, Kaggle ID 57924465 |
 | Parameters | 4,338,034 |
 | Local accuracy | VAL5K 97.36 (seed 1, EMA, rotation-aggregated + flip) |
@@ -69,7 +69,7 @@ the image and of its horizontal flip, aggregate over rotations, and average the 
 
 Seeds 0 and 2 were not submitted, so their files are not in this repo.
 
-Public LB 0.903, the best of our submissions, although its VAL5K is below strat_25/26/33. At equal VAL5K, this
+Public LB 0.903, the best of our submissions at the time, although its VAL5K is below strat_25/26/33. At equal VAL5K, this
 strategy scores about 1.2 pp higher on the public test set than our earlier ResNet runs. With one public
 submission, that offset is still uncertain (public standard error about 0.9 pp).
 
