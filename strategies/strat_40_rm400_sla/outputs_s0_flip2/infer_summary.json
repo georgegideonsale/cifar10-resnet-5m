@@ -1,0 +1,14 @@
+{
+  "ckpt": [
+    "strategies/strat_40_rm400_sla/outputs_s0/model.pt"
+  ],
+  "members": 1,
+  "tta": "flip2",
+  "val_acc": 0.9811999797821045,
+  "n_val": 5000,
+  "final_params": 4338034,
+  "gpu": "cpu",
+  "torch_version": "2.9.1+cpu",
+  "config_sha256": "95f25ebb2abee85587df27368b23f68b5ed4aefb0afaf08feae986713c75351f",
+  "seconds": 94.34934269997757
+}
