@@ -1,6 +1,6 @@
 # CIFAR-10 NYU HPC Submission Notebook
 
-This README explains the supplied [`cifar10_hpc.ipynb`](/Users/bhagyashreepatil/Downloads/DL-Kaggle-1/MAIN-GOOD-OUTPUT/cifar10_hpc.ipynb) notebook and the `submission_final.csv` file.
+This README explains the supplied [`cifar10_hpc.ipynb`](/Users/bhagyashreepatil/Downloads/DL-Kaggle-1/MAIN-GOOD-OUTPUT/cifar10_hpc.ipynb) notebook and the [`submission.csv`](https://github.com/georgegideonsale/cifar10-resnet-5m/blob/bap9622/submission.csv) file.
 
 The notebook trains a CIFAR-10 classifier for the NYU Kaggle competition. It uses only the course-provided training images. It first compares two training lengths on a fixed validation split, chooses the better one, retrains that one model on all 50,000 labelled images, predicts the 2,000 unlabelled test images, and writes a Kaggle submission file.
 
@@ -79,12 +79,6 @@ Use this assignment in the last notebook cell so the code saves the upload file 
 
 ```python
 SUBMISSION_PATH = Path.home() / "submission.csv"
-```
-
-That assignment overrides the earlier environment-based submission path. To save under another name, change that line in the final cell. For example:
-
-```python
-SUBMISSION_PATH = Path.home() / "submission_final.csv"
 ```
 
 ## Data split and model selection
@@ -343,10 +337,3 @@ These counts help catch obvious pipeline mistakes. They do not reveal the hidden
 - It uses one final model rather than a test-time model ensemble.
 - It keeps the model under the 5 million parameter limit.
 - It writes exactly the required `id,label` CSV format.
-
-## Practical notes
-
-- Keep the completed model files and submission CSV before changing any configuration.
-- Do not pick models by repeatedly submitting to Kaggle. Use the fixed validation split to choose the model, then retrain on all 50,000 images.
-- Do not turn on every optional technique at once. Run one controlled comparison at a time.
-- A high validation result can still differ from a public or private leaderboard result when the hidden images differ slightly from the training distribution.
