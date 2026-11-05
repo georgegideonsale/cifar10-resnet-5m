@@ -47,12 +47,13 @@ python strat_<N>_train.py --config <yaml> --data <npz> --out <dir> [--seed S] [-
 - `none`: one view. `flip2`: average of the image and its horizontal flip.
 - `tta6`: 6 views with weights 0.25 (image), 0.25 (flip), and 0.125 each for 1-pixel shifts (-1,-1) and
   (+1,+1) of the image and of the flip.
-- `agg`, `agg_flip2` (strat_38 only): rotation-aggregated prediction of the joint class-rotation head,
+- `agg`, `agg_flip2` (strat_38, strat_40): rotation-aggregated prediction of the joint class-rotation head,
   averaged over the 4 rotations; `agg_flip2` also averages the flip.
 
 Which variant is submitted is fixed in the config (`eval.submit_weights`, `eval.submit_tta`) before training.
 The early strategies (strat_1, strat_6) picked the best of live/EMA x none/flip2 on VAL5K, which makes their
-VAL5K number about 0.1 pp optimistic.
+VAL5K number about 0.1 pp optimistic. strat_40 was submitted with `flip2` instead of its configured `agg_flip2`,
+chosen on VAL5K after training (see its README).
 
 ## Data file hashes
 
