@@ -24,7 +24,8 @@ submission, its config, the training log, the checkpoint, the parameter count an
 | [strat_26](strategies/strat_26_rm_sam_deep_400) | ResNet 4-4-4 + RegMixup + SAM | 4,501,570 | 97.62 | 89.8 | 2026-11-02 |
 | [strat_33](strategies/strat_33_rm400_ba) | strat_25 + born-again distillation | 4,327,754 | 97.64 | 89.6 | 2026-11-02 |
 | [strat_38](strategies/strat_38_sla_sd) | ResNet 3-3-3 + rotation labels + self-distillation | 4,338,034 | 97.36 | 90.3 | 2026-11-02 |
-| [strat_40](strategies/strat_40_rm400_sla) | strat_25 recipe + rotation labels + self-distillation | 4,338,034 | 98.12 | **90.5** | 2026-11-03 |
+| [strat_40](strategies/strat_40_rm400_sla) | strat_25 recipe + rotation labels + self-distillation | 4,338,034 | 98.12 | 90.5 | 2026-11-03 |
+| [strat_42](strategies/strat_42_rm400_sla_full) | strat_40 trained on all 50,000 images, 6-view TTA | 4,338,034 | n/a (full fit) | **91.0** | 2026-11-07 |
 
 [strat_6](strategies/strat_6_wrn16x5_regmixup_s1) was not submitted itself. It is here because strat_9 is built
 from its saved predictions.
@@ -34,7 +35,8 @@ All submitted files, their SHA-256 and the Kaggle submission IDs are listed in [
 **How to read the numbers**
 
 - VAL5K is a fixed hold-out of 5,000 training images (500 per class, seed 0) made by `tools/pack_data.py`.
-  Every strategy above trains on the other 45,000 images, so the VAL5K numbers are comparable.
+  Every strategy above except strat_42 trains on the other 45,000 images, so their VAL5K numbers are comparable.
+  strat_42 also trains on the VAL5K images, so it has no local score; its recipe scores 98.06 on VAL5K (strat_40, 6-view TTA).
   Standard error is about 0.2 pp, so differences below about 0.5 pp need a second seed.
 - The public leaderboard uses 1,000 of the 2,000 test images: one image is 0.1 pp and the standard error is
   about 0.9 pp. Small public differences are mostly noise.
