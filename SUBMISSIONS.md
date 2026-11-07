@@ -20,8 +20,11 @@ the deadline.
 | 9 | 2026-11-05 22:40 | gs4602 | strat_40_s0_agg_flip2.csv | 58036904 | [strat_40](strategies/strat_40_rm400_sla) `outputs_s0/submission.csv` | `c296223618e79fc32508c76cd60853f1551e24fb5040b8693b30fb8f7cd0ce5c` | 0.905 |
 | 10 | 2026-11-05 23:52 | gs4602 | strat_40_s0_agg_flip2.csv | 58038132 | [strat_40](strategies/strat_40_rm400_sla) `outputs_s0/submission.csv` (same file as row 9, uploaded twice by mistake) | `c296223618e79fc32508c76cd60853f1551e24fb5040b8693b30fb8f7cd0ce5c` | 0.905 |
 | 11 | 2026-11-07 00:14 | gs4602 | strat_42_s0_fullfit_tta6.csv | 58073314 | [strat_42](strategies/strat_42_rm400_sla_full) `outputs_s0/submission.csv` | `642a6a786d549d0f60be95b658d8cda4677a557af59b9fd66bbba2522561a88c` | 0.910 |
+| 12 | 2026-11-07 04:27 | gs4602 | strat_43_s0_cutout_tta6.csv | 58079001 | [strat_43](strategies/strat_43_rm400_sla_cutout) `outputs_s0/submission.csv` | `0933478b055f17f54d425e077ab022cf05dff3f01744da531ce548b0ba7df24c` | 0.897 |
+| 13 | 2026-11-07 04:27 | gs4602 | strat_50_cutout_full_tta6.csv | 58079004 | [strat_50](strategies/strat_50_cutout_full) `outputs_s0/submission.csv` | `89e4647dc4998d6fd600671cf54808ba0107650ba8e8819de15168e561786eb0` | 0.894 |
+| 14 | 2026-11-07 04:28 | gs4602 | strat_51_wide84_full_tta6.csv | 58079007 | [strat_51](strategies/strat_51_wide84_full) `outputs_s0/submission.csv` | `6826ef666d41cb9baf3251f24bb147b786b5928dde4dccf4e43cc176bfa9da75` | 0.897 |
 
-Rows 1-7 were checked on 2026-11-03 and rows 9-11 on 2026-11-07: each file was downloaded back from Kaggle and
+Rows 1-7 were checked on 2026-11-03 and rows 9-14 on 2026-11-07: each file was downloaded back from Kaggle and
 is byte-identical to the file in the repo.
 
 ## Final selections
@@ -31,5 +34,7 @@ before the deadline (2026-11-07 04:59 UTC).
 
 | Selection | Strategy folder | Kaggle ID | Why |
 |---|---|---:|---|
-| 1 | | | |
-| 2 | | | |
+| 1 | [strat_42](strategies/strat_42_rm400_sla_full) `outputs_s0/submission.csv` (SHA-256 `642a6a78…`) | 58073314 | Team's best public score (0.910). Fully reproducible from the code, log and checkpoint in this repo. |
+| 2 | Bhagyashree Patil (`bap9622`): `submission.csv` on branch `bap9622` ([pull request #1](https://github.com/georgegideonsale/cifar10-resnet-5m/pull/1)), SHA-256 `45b4031d2a4b57f8f76c4f3a5a2886bf3a0619d65995dd29653c7e19b2cc9742` | 57886359 | Second-best public score (0.909), from a different model (PreAct ResNet 4-4-3, 4,706,674 parameters), so the two picks do not depend on one recipe. The file downloaded back from Kaggle is byte-identical to the file on the branch. |
+
+Selections chosen by the team leader on 2026-11-07, before the deadline.
