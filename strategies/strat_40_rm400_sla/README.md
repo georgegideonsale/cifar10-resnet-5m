@@ -4,8 +4,8 @@
 |---|---|
 | Author | George Gideon Sale (`gs4602`) |
 | Parent | [strat_25](../strat_25_rm_400) (one change: SLA+SD from [strat_38](../strat_38_sla_sd)) |
-| Status | submitted (seed 0) |
-| Kaggle | `strat_40_s0_flip2.csv`, submitted 2026-11-03 21:44 UTC, public LB 0.905, Kaggle ID 57961146 |
+| Status | submitted (seed 0, two inference variants) |
+| Kaggle | `strat_40_s0_flip2.csv`, submitted 2026-11-03 21:44 UTC, public LB 0.905, Kaggle ID 57961146; `strat_40_s0_agg_flip2.csv`, submitted 2026-11-05 22:40 UTC, public LB 0.905, Kaggle ID 58036904 (the same file was uploaded again by mistake at 23:52 UTC, ID 58038132) |
 | Parameters | 4,338,034 |
 | Local accuracy | VAL5K 98.12 (seed 0, EMA, class head, flip2), our highest |
 
@@ -94,6 +94,7 @@ python strat_40_train.py --config strat_40_config.yaml --data ../../packed/cifar
 | `logs/s40_0_19965.out` | training log of seed 0 (Slurm job 19965) |
 | `outputs_s0/model.pt` | trained weights (EMA) |
 | `outputs_s0/summary.json`, `outputs_s0/metrics.jsonl` | run summary and per-epoch metrics |
+| `outputs_s0/submission.csv` | the `agg_flip2` file written by the training run (the config default), submitted as `strat_40_s0_agg_flip2.csv` |
 | `outputs_s0_flip2/submission.csv` | the submitted file (flip2 inference) |
 | `outputs_s0_flip2/infer_summary.json` | settings of the inference run that made it |
 
