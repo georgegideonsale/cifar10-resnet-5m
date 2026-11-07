@@ -17,9 +17,12 @@ the deadline.
 | 6 | 2026-11-02 23:52 | gs4602 | 3_strat_26_s0_flip.csv | 57924531 | [strat_26](strategies/strat_26_rm_sam_deep_400) `outputs_s0/submission.csv` | `7b593bc216441d6ea9905a157a034f5c0f8323af6a1638cd3c91699897df7ce4` | 0.898 |
 | 7 | 2026-11-02 23:52 | gs4602 | 4_strat_33_s0_flip.csv | 57924537 | [strat_33](strategies/strat_33_rm400_ba) `outputs_s0/submission.csv` | `157105e3dfe0973586b7232fe61f1c583620cf1aae5c8c92e9e35d76811f03bd` | 0.896 |
 | 8 | 2026-11-03 21:44 | gs4602 | strat_40_s0_flip2.csv | 57961146 | [strat_40](strategies/strat_40_rm400_sla) `outputs_s0_flip2/submission.csv` | `4c1e8cfc6f75b61d9dff2c12d01c3d2775db156e1b4bc24c3bab7139ed509c4b` | 0.905 |
+| 9 | 2026-11-05 22:40 | gs4602 | strat_40_s0_agg_flip2.csv | 58036904 | [strat_40](strategies/strat_40_rm400_sla) `outputs_s0/submission.csv` | `c296223618e79fc32508c76cd60853f1551e24fb5040b8693b30fb8f7cd0ce5c` | 0.905 |
+| 10 | 2026-11-05 23:52 | gs4602 | strat_40_s0_agg_flip2.csv | 58038132 | [strat_40](strategies/strat_40_rm400_sla) `outputs_s0/submission.csv` (same file as row 9, uploaded twice by mistake) | `c296223618e79fc32508c76cd60853f1551e24fb5040b8693b30fb8f7cd0ce5c` | 0.905 |
+| 11 | 2026-11-07 00:14 | gs4602 | strat_42_s0_fullfit_tta6.csv | 58073314 | [strat_42](strategies/strat_42_rm400_sla_full) `outputs_s0/submission.csv` | `642a6a786d549d0f60be95b658d8cda4677a557af59b9fd66bbba2522561a88c` | 0.910 |
 
-Rows 1-7 were checked on 2026-11-03: each file was downloaded back from Kaggle and is byte-identical to the
-file in the repo.
+Rows 1-7 were checked on 2026-11-03 and rows 9-11 on 2026-11-07: each file was downloaded back from Kaggle and
+is byte-identical to the file in the repo.
 
 ## Final selections
 
