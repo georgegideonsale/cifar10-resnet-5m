@@ -1,0 +1,86 @@
+# strat_51_wide84_full: strat_40 config with one change, full fit on all 50k (strategy.md). Every hyperparameter is here. No magic numbers in code.
+seed: 0
+
+model:                      # arch resnet: post-activation ReLU(S(x) + F(x)); arch wrn: pre-activation
+  arch: resnet
+  widths: [84, 168, 336]    # strat_51: wider, shallower
+  blocks: [2, 2, 2]
+  num_classes: 10
+  sla_rotations: 4          # class x rotation head: 10 x 4 = 40 outputs (0, 90, 180, 270 degrees)
+
+expected_params: 4794854    # spec: assert total == this. strat_12 4,327,754 + joint head 256 x 40 + 40
+members: 1                  # number of seeds that form the final model
+param_limit: 5000000        # competition rule: members x params must stay under this
+
+data:
+  mean: [0.4914, 0.4822, 0.4465]   # train statistics only
+  std: [0.2470, 0.2435, 0.2616]
+  full_train: true                 # strat_42: train = all 50k (VAL5K is inside training: no valid local score)
+
+train:
+  epochs: 400
+  batch_size: 256
+  drop_last: true
+  lr: 0.2
+  momentum: 0.9
+  nesterov: true
+  weight_decay: 0.0005      # on all parameters, BN and bias included
+  warmup_epochs: 2          # lr = lr * (step + 1) / warmup_steps, then cosine to zero
+  label_smoothing: 0.1
+  ema_decay: 0.999          # from step 0; parameters and float buffers are averaged, integer buffers copied
+  amp_dtype: bf16           # A100. Kaggle T4: fp16
+  channels_last: true
+  cudnn_benchmark: true
+  workers: 11               # per-image TrivialAugment needs CPU workers
+
+augment:                    # per image, in this order
+  crop_padding: 4
+  pad_mode: constant
+  policy: trivial           # trivial | randaug | none
+  random_erasing: 0.25      # after normalization, fill 0
+
+mix:                        # on the batch; at most one of these
+  regmixup_alpha: 20         # > 0: clean CE + mixup CE, each x 0.5 (Pinto et al. 2022)
+  mixup_alpha: 0            # > 0: with probability mix_prob
+  cutmix_alpha: 0           # > 0: with probability mix_prob
+  mix_prob: 0.5
+
+sla:                        # SLA+SD (Lee et al. 2020). Loss = CE(joint, 4 rotations) + beta * CE(single, y) + sd_weight * KL(agg || single)
+  beta: 1.0                 # weight of the single-head CE on the unrotated image
+  sd_weight: 1.0            # weight of the self-distillation KL; the aggregated target is detached
+  temperature: 1.0
+
+sam_rho: 0.0                # > 0: sharpness-aware step (Foret et al. 2021), BN statistics frozen in the second pass
+
+kd:                         # teacher trained by us from scratch on the same images, at most 5M (rules Q9)
+  ckpt: null                # state_dict path; null = off
+  arch: resnet              # of the teacher: resnet | wrn (may differ from the student)
+  widths: [64, 128, 256]
+  blocks: [3, 3, 3]
+  alpha: 0.0                # weight of the soft targets
+  temperature: 1.0
+
+eval:
+  every: 10                 # VAL5K EMA + live, no TTA; no effect on the final weights
+  batch_size: 500
+  tta6_weights: [0.25, 0.25, 0.125, 0.125, 0.125, 0.125]   # id, flip, s(-1,-1), s(+1,+1), flip+s(-1,-1), flip+s(+1,+1)
+  tta6_shift_pad: 1
+  submit_weights: ema       # fixed before training: no selection on VAL5K
+  submit_tta: tta6          # fixed before training: strat_40 2-seed VAL5K mean tta6 98.06 > flip2 97.99 > agg_flip2 97.64
+
+checkpoint:
+  every: 5
+
+kill:
+  max_projected_min: 150     # exit 2 after epoch 3 if epochs x t_epoch exceeds this
+  t_epoch_epochs: [2, 3]    # 1-indexed
+  val_check_frac: 0.25      # at the end of epoch ceil(frac * epochs)
+  val_min_acc: 0.70
+  max_nonfinite_per_epoch: 10
+
+smoke:                      # --smoke. On GPU: full data for 3 epochs, measures the real t_epoch.
+  gpu_epochs: 3
+  cpu_n_train: 512          # local CPU: code path only, < 3 min
+  cpu_batch_size: 64
+  cpu_epochs: 2
+  cpu_val_n: 128
