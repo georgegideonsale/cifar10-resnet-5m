@@ -1,0 +1,103 @@
+{
+  "strategy": "strat_50_cutout_full",
+  "status": "completed",
+  "kill_reason": null,
+  "params": 4338034,
+  "members": 1,
+  "final_params": 4338034,
+  "val_acc": 0.9972,
+  "val_split": "VAL5K in train: no valid score",
+  "val_acc_all": {
+    "live_none": 0.9974,
+    "live_flip2": 0.9976,
+    "live_tta6": 0.9974,
+    "live_agg": 0.9926,
+    "live_agg_flip2": 0.9936,
+    "ema_none": 0.9974,
+    "ema_flip2": 0.9978,
+    "ema_tta6": 0.9972,
+    "ema_agg": 0.9922,
+    "ema_agg_flip2": 0.9936
+  },
+  "val_correct_all": {
+    "live_none": 4987,
+    "live_flip2": 4988,
+    "live_tta6": 4987,
+    "live_agg": 4963,
+    "live_agg_flip2": 4968,
+    "ema_none": 4987,
+    "ema_flip2": 4989,
+    "ema_tta6": 4986,
+    "ema_agg": 4961,
+    "ema_agg_flip2": 4968
+  },
+  "grid": {
+    "sharp2": 0.9964,
+    "contrast1.2": 0.9978,
+    "all_up": 0.9976
+  },
+  "chosen": {
+    "weights": "ema",
+    "tta": "tta6"
+  },
+  "logits_note": "test_logits/val_logits: log of the averaged softmax of the submitted weights and views.",
+  "epochs": 245,
+  "planned_epochs": 400,
+  "full_epochs": 244,
+  "steps": 47762,
+  "steps_per_epoch": 195,
+  "warmup_steps": 390,
+  "short_run": true,
+  "train_seconds": 4500.381984689,
+  "train_minutes": 75.00636641148334,
+  "final_eval_seconds": 9.828504929999326,
+  "epoch_seconds_mean": 18.272707637253063,
+  "time_budget_min": 75.0,
+  "n_train": 50000,
+  "n_val": 5000,
+  "full_train": true,
+  "batch_size": 256,
+  "workers": 11,
+  "smoke": false,
+  "resumed": false,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "amp": "bf16",
+  "grad_scaler": false,
+  "channels_last": true,
+  "torch_version": "2.15.0+cu132",
+  "numpy_version": "2.5.4",
+  "python_version": "3.14.10",
+  "seed": 0,
+  "config_sha256": "09ae46029637b5c722eb748cb72de9bcc81655bdc7af3a2d4b8010e665194d0c",
+  "data_sha256": "5f3f740eb93729ac20fab44f1a85b47f51529963fb3d756b76f24b753a96c7be",
+  "sam_rho": 0.0,
+  "mix": {
+    "regmixup_alpha": 20,
+    "mixup_alpha": 0,
+    "cutmix_alpha": 0,
+    "mix_prob": 0.5
+  },
+  "kd": {
+    "ckpt": null,
+    "arch": "resnet",
+    "widths": [
+      64,
+      128,
+      256
+    ],
+    "blocks": [
+      3,
+      3,
+      3
+    ],
+    "alpha": 0.0,
+    "temperature": 1.0
+  },
+  "sla": {
+    "rotations": 4,
+    "beta": 1.0,
+    "sd_weight": 1.0,
+    "temperature": 1.0
+  },
+  "peak_gpu_mem_gb": 7.307159552
+}
