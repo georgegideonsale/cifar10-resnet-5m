@@ -54,6 +54,10 @@ python strat_42_infer.py --config strat_42_config.yaml --data ../../packed/cifar
 sha256sum repro/submission.csv outputs_s0/submission.csv
 ```
 
+Or open `strat_42_reproduce.ipynb` (run it from this folder). It does the same rebuild on a CPU, checks the
+result against the submitted file, prints the parameter count and the recipe's VAL5K accuracy (strat_40 seed 0,
+same tta6 inference), and lists the Kaggle scores.
+
 From scratch (GPU, seed 0):
 
 ```bash
@@ -65,6 +69,7 @@ python strat_42_train.py --config strat_42_config.yaml --data ../../packed/cifar
 | File | Content |
 |---|---|
 | `strat_42_*.py`, `strat_42_config.yaml` | model, training, inference, config (code identical to strat_40) |
+| `strat_42_reproduce.ipynb` | rebuilds the submitted file from the checkpoint and prints params and accuracy |
 | `logs/s42_0_runpod.out` | full training log of seed 0 |
 | `outputs_s0/model.pt` | trained weights (EMA), SHA-256 `529685e8d1e4f9da…` |
 | `outputs_s0/summary.json`, `outputs_s0/metrics.jsonl` | run summary and per-epoch metrics |
