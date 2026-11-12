@@ -35,6 +35,6 @@ filled in before the deadline (2026-11-07 04:59 UTC).
 | Selection | Strategy folder | Kaggle ID | Why |
 |---|---|---:|---|
 | 1 | [strat_42](strategies/strat_42_rm400_sla_full) `outputs_s0/submission.csv` (SHA-256 `642a6a78…`) | 58073314 | Team's best public score (0.910). Fully reproducible from the code, log and checkpoint in this repo. |
-| 2 | Bhagyashree Patil (`bap9622`): `submission.csv` on branch `bap9622` ([pull request #1](https://github.com/georgegideonsale/cifar10-resnet-5m/pull/1)), SHA-256 `45b4031d2a4b57f8f76c4f3a5a2886bf3a0619d65995dd29653c7e19b2cc9742` | 57886359 | Second-best public score (0.909), from a different model (PreAct ResNet 4-4-3, 4,706,674 parameters), so the two picks do not depend on one recipe. The file downloaded back from Kaggle is byte-identical to the file on the branch. |
+| 2 | Bhagyashree Patil (`bap9622`): [`submission.csv`](submission.csv) in the repo root, made by [`cifar10_hpc.ipynb`](cifar10_hpc.ipynb), SHA-256 `45b4031d2a4b57f8f76c4f3a5a2886bf3a0619d65995dd29653c7e19b2cc9742` | 57886359 | Second-best public score (0.909), from a different model (PreAct ResNet 4-4-3, 4,706,674 parameters), so the two picks do not depend on one recipe. The file downloaded back from Kaggle is byte-identical to this file. |
 
 The team leader chose both selections on 2026-11-07, before the deadline.

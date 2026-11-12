@@ -32,8 +32,13 @@ submission, its config, the training log, the checkpoint, the parameter count an
 | [strat_51](strategies/strat_51_wide84_full) | wider ResNet 84-168-336, 2-2-2, all 50,000 images, 75-min budget | 4,794,854 | n/a (full fit) | 89.7 | 2026-11-07 |
 
 The team leader picked our two final selections on Kaggle: strat_42 (public 0.910) and Bhagyashree Patil's
-PreAct ResNet submission (public 0.909, [pull request #1](https://github.com/georgegideonsale/cifar10-resnet-5m/pull/1)).
-There's more on that in [SUBMISSIONS.md](SUBMISSIONS.md#final-selections).
+PreAct ResNet submission (public 0.909; notebook [cifar10_hpc.ipynb](cifar10_hpc.ipynb), notes in
+[README_cifar10_hpc.md](README_cifar10_hpc.md), file [submission.csv](submission.csv)). There's more on that in
+[SUBMISSIONS.md](SUBMISSIONS.md#final-selections).
+
+[strategies/strat_42_rm400_sla_full/strat_42_reproduce.ipynb](strategies/strat_42_rm400_sla_full/strat_42_reproduce.ipynb)
+rebuilds our final submission from its checkpoint and prints the parameter count, the validation accuracy of the
+recipe and the Kaggle scores.
 
 [strat_6](strategies/strat_6_wrn16x5_regmixup_s1) never got submitted on its own. We kept it because strat_9 is
 built from its saved predictions.
@@ -64,6 +69,7 @@ tools/               pack_data.py, count_params.py, validate_submission.py
 packed/              cifar_comp_v1.json (hashes of the packed data and of the VAL5K split)
 data/                competition data (not in git, see data/README.md)
 strategies/          one folder per strategy
+cifar10_hpc.ipynb    Bhagyashree's PreAct ResNet notebook (README_cifar10_hpc.md, submission.csv)
 ```
 
 ## Setup
