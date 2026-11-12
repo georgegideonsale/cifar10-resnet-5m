@@ -1,19 +1,20 @@
 # cifar10-resnet-5m
 
-Code, configs, logs and checkpoints of team **Overfitting101** for the NYU Tandon Deep Learning (Fall 2026)
-Kaggle competition *CIFAR-10 ResNet Architecture Challenge* (`cifar-10-res-net-architecture-challenge-dl`).
+This is team Overfitting101's repo for the NYU Tandon Deep Learning (Fall 2026) Kaggle competition,
+*CIFAR-10 ResNet Architecture Challenge* (`cifar-10-res-net-architecture-challenge-dl`). It has our code,
+configs, logs and checkpoints.
 
-The task: classify a distribution-shifted CIFAR-10 test set (2,000 images, 32x32) with a residual CNN that has
-at most 5,000,000 parameters, trained from scratch on the 50,000 training images provided by the course staff.
-The metric is accuracy. The final ranking uses the private half of the test set.
+The task is to classify a distribution-shifted CIFAR-10 test set (2,000 images, 32x32) with a residual CNN of at
+most 5,000,000 parameters, trained from scratch on the 50,000 training images the course staff gave us. Scoring
+is plain accuracy, and the final ranking is on the private half of the test set.
 
-Team members: George Gideon Sale (`gs4602`), Tarun (`tk3701`), Bhagyashree Patil (`bap9622`).
+The team is George Gideon Sale (`gs4602`), Tarun (`tk3701`) and Bhagyashree Patil (`bap9622`).
 
-Every strategy in this repo is meant to be reproducible on its own: the exact code that produced a Kaggle
+We tried to make every strategy folder reproducible by itself. Each one has the exact code behind a Kaggle
 submission, its config, the training log, the checkpoint, the parameter count and the commands to rebuild the
-`submission.csv`. See [CONTRIBUTING.md](CONTRIBUTING.md) to add yours.
+`submission.csv`. If you want to add one of yours, [CONTRIBUTING.md](CONTRIBUTING.md) explains how.
 
-## Submitted strategies
+## What we submitted
 
 | Strategy | Model | Params | VAL5K | Public LB | Submitted (UTC) |
 |---|---|---:|---:|---:|---|
@@ -30,25 +31,25 @@ submission, its config, the training log, the checkpoint, the parameter count an
 | [strat_50](strategies/strat_50_cutout_full) | strat_43 on all 50,000 images, 75-min budget | 4,338,034 | n/a (full fit) | 89.4 | 2026-11-07 |
 | [strat_51](strategies/strat_51_wide84_full) | wider ResNet 84-168-336, 2-2-2, all 50,000 images, 75-min budget | 4,794,854 | n/a (full fit) | 89.7 | 2026-11-07 |
 
-**Final selections** (chosen on Kaggle by the team leader): strat_42 (public 0.910) and Bhagyashree Patil's
+The team leader picked our two final selections on Kaggle: strat_42 (public 0.910) and Bhagyashree Patil's
 PreAct ResNet submission (public 0.909, [pull request #1](https://github.com/georgegideonsale/cifar10-resnet-5m/pull/1)).
-Details in [SUBMISSIONS.md](SUBMISSIONS.md#final-selections).
+There's more on that in [SUBMISSIONS.md](SUBMISSIONS.md#final-selections).
 
-[strat_6](strategies/strat_6_wrn16x5_regmixup_s1) was not submitted itself. It is here because strat_9 is built
-from its saved predictions.
+[strat_6](strategies/strat_6_wrn16x5_regmixup_s1) never got submitted on its own. We kept it because strat_9 is
+built from its saved predictions.
 
-All submitted files, their SHA-256 and the Kaggle submission IDs are listed in [SUBMISSIONS.md](SUBMISSIONS.md).
+Every submitted file, with its SHA-256 and Kaggle submission ID, is in [SUBMISSIONS.md](SUBMISSIONS.md).
 
-**How to read the numbers**
+### Reading the numbers
 
-- VAL5K is a fixed hold-out of 5,000 training images (500 per class, seed 0) made by `tools/pack_data.py`.
-  Every strategy above except the full fits (strat_42, strat_50, strat_51) trains on the other 45,000 images, so
-  their VAL5K numbers are comparable. The full fits also train on the VAL5K images, so they have no local score;
-  the strat_42 recipe scores 98.06 on VAL5K (strat_40, 6-view TTA).
-  Standard error is about 0.2 pp, so differences below about 0.5 pp need a second seed.
-- The public leaderboard uses 1,000 of the 2,000 test images: one image is 0.1 pp and the standard error is
-  about 0.9 pp. Small public differences are mostly noise.
-- The test set is shifted, so public scores sit 7-10 pp below VAL5K.
+- VAL5K is a fixed hold-out of 5,000 training images (500 per class, seed 0), made by `tools/pack_data.py`.
+  Apart from the full fits (strat_42, strat_50, strat_51), every strategy above trains on the remaining 45,000
+  images, so their VAL5K numbers can be compared. The full fits train on the VAL5K images too, which means they
+  have no local score. For reference, the strat_42 recipe gets 98.06 on VAL5K (strat_40, 6-view TTA).
+  The standard error is about 0.2 pp, so a difference under about 0.5 pp needs a second seed.
+- The public leaderboard only uses 1,000 of the 2,000 test images. One image is worth 0.1 pp and the standard
+  error is about 0.9 pp, so small public differences are mostly noise.
+- Because the test set is shifted, public scores land 7-10 pp below VAL5K.
 
 ## Repository layout
 
@@ -72,20 +73,21 @@ python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\
 pip install -r requirements.txt
 ```
 
-Download the competition data into `data/` (see [data/README.md](data/README.md)), then pack it once:
+Put the competition data in `data/` ([data/README.md](data/README.md) has the steps) and pack it once:
 
 ```bash
 python tools/pack_data.py
 ```
 
-This writes `packed/cifar_comp_v1.npz` (all images as uint8 arrays plus the VAL5K indices) and rewrites
-`packed/cifar_comp_v1.json`. Check that `val_idx_sha256` is still
-`e2dfe1ecb7968a0303636292c48734fec18e706d6ab3309ca2c3c182b35dd609`. If it is, you have the same VAL5K split.
-The `sha256` of the `.npz` file itself can differ between machines (zip metadata); the arrays are the same.
+That writes `packed/cifar_comp_v1.npz` (every image as a uint8 array, plus the VAL5K indices) and rewrites
+`packed/cifar_comp_v1.json`. Check that `val_idx_sha256` still reads
+`e2dfe1ecb7968a0303636292c48734fec18e706d6ab3309ca2c3c182b35dd609`; if so, your VAL5K split is the same as ours.
+Don't worry if the `sha256` of the `.npz` file itself is different on your machine. That comes from zip
+metadata, and the arrays inside are the same.
 
-## Reproduce a submission from its checkpoint
+## Rebuilding a submission from its checkpoint
 
-Inference runs on a CPU in about 2 minutes (15 minutes for strat_38). Example for strat_25:
+Inference takes about 2 minutes on a CPU (15 minutes for strat_38). Here's strat_25 as an example:
 
 ```bash
 cd strategies/strat_25_rm_400
@@ -94,26 +96,26 @@ python strat_25_infer.py --config strat_25_config.yaml --data ../../packed/cifar
 python ../../tools/validate_submission.py repro/submission.csv
 ```
 
-Each strategy README gives the exact commands for that strategy and says whether the CPU result matched the
-submitted file byte for byte.
+The README in each strategy folder has the exact commands for that strategy, and says whether the CPU result
+matched the submitted file byte for byte.
 
-## Retrain from scratch
+## Training from scratch
 
-Each strategy README gives the training command, the GPU it ran on and the training time. Example:
+The strategy READMEs also list the training command, the GPU it ran on and how long it took. For example:
 
 ```bash
 cd strategies/strat_25_rm_400
 python strat_25_train.py --config strat_25_config.yaml --data ../../packed/cifar_comp_v1.npz --out outputs_s0 --seed 0
 ```
 
-Training prints the full parameter count first and stops if it is above 5,000,000.
+The first thing training does is print the full parameter count. It stops if that's above 5,000,000.
 
-## Making the final submission
+## How the final submission gets made
 
-The submission we pick must come from a strategy folder in this repo, so that it can be reproduced:
+Whatever we pick has to come from a strategy folder in this repo, so someone can reproduce it:
 
-1. Run `python tools/validate_submission.py strategies/<folder>/<outputs>/submission.csv`. It must print `PASS`.
-2. Upload exactly that file on Kaggle.
+1. Run `python tools/validate_submission.py strategies/<folder>/<outputs>/submission.csv` and make sure it prints `PASS`.
+2. Upload exactly that file to Kaggle.
 3. Add a row to [SUBMISSIONS.md](SUBMISSIONS.md) with its SHA-256 (`sha256sum <file>`) and the score.
 
 ## Citations
@@ -132,11 +134,11 @@ The submission we pick must come from a strategy folder in this repo, so that it
 - T. Furlanello, Z. Lipton, M. Tschannen, L. Itti, A. Anandkumar. Born-Again Neural Networks. ICML 2018.
 - G. Hinton, O. Vinyals, J. Dean. Distilling the Knowledge in a Neural Network. 2015.
 - H. Lee, S. J. Hwang, J. Shin. Self-supervised Label Augmentation via Input Transformations (SLA+SD). ICML 2020.
-- The post-activation ResNet and the TrivialAugment recipe used from strat_11 on come from Tarun's S3 notebook.
+- The post-activation ResNet and the TrivialAugment recipe we use from strat_11 onward come from Tarun's S3 notebook.
 
-No pretrained weights and no external datasets are used anywhere. The only libraries are PyTorch, torchvision,
+We don't use pretrained weights or external datasets anywhere. The only libraries are PyTorch, torchvision,
 NumPy, pandas, Pillow and PyYAML.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The competition data is not part of this repo and is not covered by this license.
+MIT, see [LICENSE](LICENSE). The competition data isn't part of this repo, and the license doesn't cover it.

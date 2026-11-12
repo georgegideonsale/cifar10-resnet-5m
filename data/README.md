@@ -1,14 +1,14 @@
-# Data
+# data
 
-The competition data is not stored in this repo (the Kaggle terms do not allow redistribution).
-Download it from the competition page, or with the Kaggle CLI after accepting the rules:
+We don't keep the competition data in this repo, since the Kaggle terms don't allow redistributing it. You can
+get it from the competition page, or with the Kaggle CLI once you've accepted the rules:
 
 ```bash
 kaggle competitions download -c cifar-10-res-net-architecture-challenge-dl
 unzip cifar-10-res-net-architecture-challenge-dl.zip -d data/
 ```
 
-Expected contents:
+After unzipping, the folder should look like this:
 
 ```
 data/
@@ -19,4 +19,4 @@ data/
   sample_submission.csv  id,label
 ```
 
-Then run `python tools/pack_data.py` from the repo root. Do not edit anything in `data/`.
+Next, run `python tools/pack_data.py` from the repo root. Please leave everything in `data/` as it is.

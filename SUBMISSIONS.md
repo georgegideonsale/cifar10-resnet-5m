@@ -1,11 +1,11 @@
 # Kaggle submissions
 
-One row per file uploaded to Kaggle. Add your rows at the bottom of the table, oldest first.
-The SHA-256 lets anyone check that the file in the repo is the file that was scored:
+Each file we uploaded to Kaggle gets one row here. New rows go at the bottom, so the table stays oldest first.
+With the SHA-256, anyone can check that the file in the repo is the one that was scored:
 `sha256sum strategies/<folder>/<outputs>/submission.csv`.
 
-Public LB = accuracy on the public half of the test set (1,000 images). The private score is shown only after
-the deadline.
+"Public LB" is the accuracy on the public half of the test set (1,000 images). Kaggle only shows the private
+score after the deadline.
 
 | # | Date (UTC) | Member | File name on Kaggle | Kaggle ID | Strategy folder and file | SHA-256 | Public LB |
 |---:|---|---|---|---:|---|---|---:|
@@ -24,17 +24,17 @@ the deadline.
 | 13 | 2026-11-07 04:27 | gs4602 | strat_50_cutout_full_tta6.csv | 58079004 | [strat_50](strategies/strat_50_cutout_full) `outputs_s0/submission.csv` | `89e4647dc4998d6fd600671cf54808ba0107650ba8e8819de15168e561786eb0` | 0.894 |
 | 14 | 2026-11-07 04:28 | gs4602 | strat_51_wide84_full_tta6.csv | 58079007 | [strat_51](strategies/strat_51_wide84_full) `outputs_s0/submission.csv` | `6826ef666d41cb9baf3251f24bb147b786b5928dde4dccf4e43cc176bfa9da75` | 0.897 |
 
-Rows 1-7 were checked on 2026-11-03 and rows 9-14 on 2026-11-07: each file was downloaded back from Kaggle and
-is byte-identical to the file in the repo.
+We checked rows 1-7 on 2026-11-03 and rows 9-14 on 2026-11-07 by downloading each file back from Kaggle. Every
+one is byte-identical to the file in the repo.
 
 ## Final selections
 
-Kaggle ranks each team by the best private score among the (up to 2) selected submissions. Fill this in
-before the deadline (2026-11-07 04:59 UTC).
+Kaggle ranks a team by the best private score among its selected submissions (2 at most). This part had to be
+filled in before the deadline (2026-11-07 04:59 UTC).
 
 | Selection | Strategy folder | Kaggle ID | Why |
 |---|---|---:|---|
 | 1 | [strat_42](strategies/strat_42_rm400_sla_full) `outputs_s0/submission.csv` (SHA-256 `642a6a78…`) | 58073314 | Team's best public score (0.910). Fully reproducible from the code, log and checkpoint in this repo. |
 | 2 | Bhagyashree Patil (`bap9622`): `submission.csv` on branch `bap9622` ([pull request #1](https://github.com/georgegideonsale/cifar10-resnet-5m/pull/1)), SHA-256 `45b4031d2a4b57f8f76c4f3a5a2886bf3a0619d65995dd29653c7e19b2cc9742` | 57886359 | Second-best public score (0.909), from a different model (PreAct ResNet 4-4-3, 4,706,674 parameters), so the two picks do not depend on one recipe. The file downloaded back from Kaggle is byte-identical to the file on the branch. |
 
-Selections chosen by the team leader on 2026-11-07, before the deadline.
+The team leader chose both selections on 2026-11-07, before the deadline.
