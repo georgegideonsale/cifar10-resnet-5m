@@ -1,19 +1,11 @@
 # strat_40: RegMixup, 400 epochs, plus rotation labels with self-distillation (SLA+SD)
 
-| | |
-|---|---|
-| Author | George Gideon Sale (`gs4602`) |
-| Parent | [strat_25](../strat_25_rm_400) (one change: SLA+SD from [strat_38](../strat_38_sla_sd)) |
-| Status | submitted (seed 0, two inference variants) |
-| Kaggle | `strat_40_s0_flip2.csv`, submitted 2026-11-03 21:44 UTC, public LB 0.905, Kaggle ID 57961146; `strat_40_s0_agg_flip2.csv`, submitted 2026-11-05 22:40 UTC, public LB 0.905, Kaggle ID 58036904 (the same file was uploaded again by mistake at 23:52 UTC, ID 58038132) |
-| Parameters | 4,338,034 |
-| Local accuracy | VAL5K 98.12 (seed 0, EMA, class head, flip2), our highest |
+strat_25 (RegMixup, 400 epochs) and [strat_38](../strat_38_sla_sd) (SLA+SD) each gave a gain on their own, so
+here we stack them: the strat_25 recipe with the SLA+SD loss and the joint rotation head of strat_38. The parent
+is [strat_25](../strat_25_rm_400) and that's the one change; everything else is equal to strat_25. Run by George
+Gideon Sale (`gs4602`).
 
-## Idea
-
-strat_25 (RegMixup, 400 epochs) and strat_38 (SLA+SD) each gave a gain on their own. This strategy stacks
-them: the strat_25 recipe with the SLA+SD loss and the joint rotation head of strat_38. Everything else is
-equal to strat_25.
+It reached VAL5K 98.12 (seed 0, EMA, class head, flip2), our highest, and 0.905 on the public LB.
 
 ## Model
 
@@ -43,19 +35,19 @@ Total 4,338,034 parameters. Both heads are part of the model and are counted.
 | Seeds | 0 (submitted), 2 |
 | Hardware and time | NYU HPC, A100-SXM4-40GB, 110.2 min of training (seed 0) |
 
-## Inference
+## Which inference we used
 
-The config fixed `agg_flip2` (rotation-aggregated joint head) before training. On VAL5K the class head with
-flip averaging (`flip2`) scored higher on both seeds (seed 0: 98.12 vs 97.56, seed 2: 97.86 vs 97.72), so the
-submitted file uses `flip2`: EMA weights, class head, mean of the softmax of the image and its horizontal flip.
-The choice was made on VAL5K only, never on test images.
+Before training, the config fixed `agg_flip2` (rotation-aggregated joint head). On VAL5K, though, the class head
+with flip averaging (`flip2`) scored higher on both seeds (seed 0: 98.12 vs 97.56, seed 2: 97.86 vs 97.72). So
+the submitted file uses `flip2`: EMA weights, class head, mean of the softmax of the image and its horizontal
+flip. We made that choice on VAL5K only, never on test images.
 
 ## Results
 
 | Seed 0 variant | VAL5K |
 |---|---:|
 | EMA, class head, one view | 97.88 |
-| **EMA, class head, flip2 (submitted)** | **98.12** |
+| EMA, class head, flip2 (submitted) | 98.12 |
 | EMA, class head, tta6 | 98.06 |
 | EMA, joint head aggregated, flip2 | 97.56 |
 
@@ -64,11 +56,20 @@ The choice was made on VAL5K only, never on test images.
 | 0 | 98.12 | 98.06 | 97.56 |
 | 2 | 97.86 | 98.06 | 97.72 |
 
-Seed 2 was not submitted, so its files are not in this repo.
+Seed 2 wasn't submitted, so its files aren't in this repo.
 
-Against strat_25 (3 seeds, mean VAL5K 97.53), the 2-seed mean of 97.99 is +0.46 pp. Public LB 0.905: about
-equal to strat_38 (0.903). The public score sits where our earlier ResNet runs predict from VAL5K, so the extra
-public gain we saw for strat_38 did not appear here (public standard error about 0.9 pp).
+Both Kaggle submissions are from seed 0:
+
+| File | Submitted (UTC) | Kaggle ID | Public LB |
+|---|---|---|---:|
+| `strat_40_s0_flip2.csv` | 2026-11-03 21:44 | 57961146 | 0.905 |
+| `strat_40_s0_agg_flip2.csv` | 2026-11-05 22:40 | 58036904 | 0.905 |
+
+The same `agg_flip2` file was uploaded again by mistake at 23:52 UTC (ID 58038132).
+
+Against strat_25 (3 seeds, mean VAL5K 97.53), our 2-seed mean of 97.99 is +0.46 pp. On the public LB, 0.905 is
+about equal to strat_38 (0.903). The public score sits where our earlier ResNet runs predict from VAL5K, so the
+extra public gain we saw for strat_38 didn't show up here (public standard error about 0.9 pp).
 
 ## Reproduce
 
@@ -78,9 +79,9 @@ python strat_40_infer.py --config strat_40_config.yaml --data ../../packed/cifar
 sha256sum repro/submission.csv outputs_s0_flip2/submission.csv
 ```
 
-The submitted file was made with this command on a CPU (about 2 minutes) from `outputs_s0/model.pt`.
+That's the command that made the submitted file, on a CPU (about 2 minutes), from `outputs_s0/model.pt`.
 
-From scratch (GPU, seed 0):
+To train from scratch (GPU, seed 0):
 
 ```bash
 python strat_40_train.py --config strat_40_config.yaml --data ../../packed/cifar_comp_v1.npz --out outputs_s0 --seed 0
@@ -88,15 +89,14 @@ python strat_40_train.py --config strat_40_config.yaml --data ../../packed/cifar
 
 ## Files
 
-| File | Content |
-|---|---|
-| `strat_40_*.py`, `strat_40_config.yaml` | model (with the joint head), training, inference, config |
-| `logs/s40_0_19965.out` | training log of seed 0 (Slurm job 19965) |
-| `outputs_s0/model.pt` | trained weights (EMA) |
-| `outputs_s0/summary.json`, `outputs_s0/metrics.jsonl` | run summary and per-epoch metrics |
-| `outputs_s0/submission.csv` | the `agg_flip2` file written by the training run (the config default), submitted as `strat_40_s0_agg_flip2.csv` |
-| `outputs_s0_flip2/submission.csv` | the submitted file (flip2 inference) |
-| `outputs_s0_flip2/infer_summary.json` | settings of the inference run that made it |
+- `strat_40_*.py`, `strat_40_config.yaml`: model (with the joint head), training, inference, config.
+- `logs/s40_0_19965.out`: training log of seed 0 (Slurm job 19965).
+- `outputs_s0/model.pt`: trained weights (EMA).
+- `outputs_s0/summary.json`, `outputs_s0/metrics.jsonl`: run summary and per-epoch metrics.
+- `outputs_s0/submission.csv`: the `agg_flip2` file written by the training run (the config default),
+  submitted as `strat_40_s0_agg_flip2.csv`.
+- `outputs_s0_flip2/submission.csv`: the submitted file (flip2 inference).
+- `outputs_s0_flip2/infer_summary.json`: settings of the inference run that made it.
 
 ## References
 
