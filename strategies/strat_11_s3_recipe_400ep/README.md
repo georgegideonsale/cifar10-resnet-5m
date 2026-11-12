@@ -1,31 +1,28 @@
 # strat_11: ResNet-20-style network with TrivialAugment, 400 epochs
 
-| | |
-|---|---|
-| Author | George Gideon Sale (`gs4602`); model and recipe from Tarun's S3 notebook |
-| Parent | strat_10 (the same recipe at 200 epochs, VAL5K 96.70, not submitted, not in this repo) |
-| Status | submitted |
-| Kaggle | `submission_strat_11.csv`, submitted 2026-11-01 06:17 UTC, public LB 0.882, Kaggle ID 57862406 |
-| Parameters | 4,327,754 |
-| Local accuracy | VAL5K 96.98 (EMA weights, flip TTA) |
+George Gideon Sale (`gs4602`) ran this; the model and recipe come from Tarun's S3 notebook. Submitted as
+`submission_strat_11.csv` on 2026-11-01 06:17 UTC (Kaggle ID 57862406), public LB 0.882. The network has
+4,327,754 parameters and gets 96.98 on VAL5K (EMA weights, flip TTA).
 
-## Idea
+## Why this run
 
-Tarun's S3 recipe (post-activation ResNet, TrivialAugment, random erasing, cosine schedule) scored better on
-the public leaderboard than our WRN baseline. strat_10 ported it as-is at 200 epochs; strat_11 changes one
-factor: 400 epochs instead of 200.
+Tarun's S3 recipe (post-activation ResNet, TrivialAugment, random erasing, cosine schedule) scored better on the
+public leaderboard than our WRN baseline. The parent, strat_10, ported it as-is at 200 epochs and got 96.70 on
+VAL5K; it wasn't submitted and isn't in this repo. strat_11 changes one factor: 400 epochs instead of 200.
 
 ## Model
 
-Post-activation ResNet with basic blocks, the reference block of the competition rules, y = ReLU(S(x) + F(x)):
+A post-activation ResNet with basic blocks, i.e. the reference block of the competition rules,
+y = ReLU(S(x) + F(x)):
 
 - Stem: 3x3 convolution 3 -> 64, BN, ReLU.
-- 3 stages of 3 basic blocks each (conv3x3-BN-ReLU-conv3x3-BN, add the skip, ReLU), widths 64, 128, 256.
-  The first block of stages 2 and 3 uses stride 2 and a 1x1 convolution + BN skip; all other skips are identity.
-- Global average pooling, linear layer 256 -> 10.
-- 4,327,754 parameters in total.
+- 3 stages of 3 basic blocks each (conv3x3-BN-ReLU-conv3x3-BN, add the skip, ReLU), with widths 64, 128, 256.
+  The first block of stages 2 and 3 uses stride 2 and a 1x1 convolution + BN skip. All other skips are identity.
+- Global average pooling, then a linear layer 256 -> 10.
 
-## Training recipe
+4,327,754 parameters in total.
+
+## Recipe
 
 | Setting | Value |
 |---|---|
@@ -41,9 +38,8 @@ Post-activation ResNet with basic blocks, the reference block of the competition
 | Seed | 0 |
 | Hardware and time | Kaggle Tesla T4, 103.4 min of training (4 data-loader workers) |
 
-## Inference
-
-EMA weights, average of the image and its horizontal flip. Fixed in the config before training.
+At inference we use the EMA weights and average the image with its horizontal flip. That choice was fixed in the
+config before training.
 
 ## Results
 
@@ -52,13 +48,14 @@ EMA weights, average of the image and its horizontal flip. Fixed in the config b
 | live, one view | 97.00 |
 | live, flip2 | 97.02 |
 | EMA, one view | 97.00 |
-| **EMA, flip2 (submitted)** | **96.98** |
+| EMA, flip2 (submitted) | 96.98 |
 | EMA, tta6 | 97.16 |
 
-400 epochs gave +0.28 pp over strat_10 (96.70) on one seed, which is about one standard error. The public
-score was higher than strat_9 (88.2 vs 87.6) although VAL5K was lower (96.98 vs 97.52). That single difference
-is within the public noise, but all later runs on this recipe kept the pattern: at equal VAL5K, this recipe
-scores higher on the shifted test set than the WRN recipe.
+Going to 400 epochs gave +0.28 pp over strat_10 (96.70) on one seed, which is about one standard error.
+
+The public score was higher than strat_9 (88.2 vs 87.6) even though VAL5K was lower (96.98 vs 97.52). That
+single difference is within the public noise. Still, every later run on this recipe kept the same pattern: at
+equal VAL5K, this recipe scores higher on the shifted test set than the WRN recipe.
 
 ## Reproduce
 
@@ -70,7 +67,7 @@ sha256sum repro/submission.csv outputs/submission.csv
 
 Checked on 2026-11-03 on a CPU (104 s): byte-identical to the submitted file.
 
-From scratch (GPU):
+To train from scratch (GPU):
 
 ```bash
 python strat_11_train.py --config strat_11_config.yaml --data ../../packed/cifar_comp_v1.npz --out outputs
@@ -89,4 +86,4 @@ python strat_11_train.py --config strat_11_config.yaml --data ../../packed/cifar
 ## References
 
 He et al. 2016 (ResNet); Müller & Hutter 2021 (TrivialAugment); Zhong et al. 2020 (random erasing);
-Szegedy et al. 2016 (label smoothing). Model and recipe: Tarun's S3 notebook (team member).
+Szegedy et al. 2016 (label smoothing). The model and recipe are from Tarun's S3 notebook (Tarun is on the team).

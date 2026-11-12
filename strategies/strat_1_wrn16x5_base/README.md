@@ -1,63 +1,65 @@
 # strat_1: pre-activation WRN-16-5 baseline
 
-| | |
-|---|---|
-| Author | George Gideon Sale (`gs4602`) |
-| Parent | none |
-| Status | submitted |
-| Kaggle | `submission_strat_1.csv`, submitted 2026-10-31 03:04 UTC, public LB 0.866, Kaggle ID 57824717 |
-| Parameters | 4,289,754 |
-| Local accuracy | VAL5K 96.46 (live weights, flip TTA) |
+Author: George Gideon Sale (`gs4602`). This one has no parent strategy. It was
+submitted as `submission_strat_1.csv` on 2026-10-31 03:04 UTC (Kaggle ID 57824717) and got 0.866 on the public
+LB. The network has 4,289,754 parameters, and locally it reaches 96.46 on VAL5K (live weights, flip TTA).
 
 ## Idea
 
-A first full pipeline: a wide residual network close to the 5M limit, a standard CIFAR recipe (SGD, label
-smoothing, crop + flip + Cutout, EMA) and a training length set by a time budget on a free Kaggle T4.
+We wanted a first full pipeline end to end: a wide residual network close to the 5M limit, a standard CIFAR
+recipe (SGD, label smoothing, crop + flip + Cutout, EMA), and a training length set by a time budget on a free
+Kaggle T4.
 
-## Model
+## The network
 
-Pre-activation WRN-16-5 (Zagoruyko & Komodakis 2016; pre-activation blocks from He et al. 2016):
+It's a pre-activation WRN-16-5 (Zagoruyko & Komodakis 2016, with the pre-activation blocks from He et al. 2016):
 
-- 3x3 stem convolution, 16 channels.
-- 3 stages of 2 pre-activation basic blocks (BN-ReLU-conv3x3-BN-ReLU-conv3x3), widths 80, 160, 320,
-  strides 1, 2, 2. Identity skip inside a stage, 1x1 convolution skip at the first block of a stage.
-- BN-ReLU, global average pooling, linear layer 320 -> 10.
-- 4,289,754 parameters in total. The training script asserts this number.
+- a 3x3 stem convolution with 16 channels,
+- 3 stages of 2 pre-activation basic blocks each (BN-ReLU-conv3x3-BN-ReLU-conv3x3), with widths 80, 160, 320
+  and strides 1, 2, 2. Skips are identity inside a stage, and a 1x1 convolution at the first block of a stage,
+- then BN-ReLU, global average pooling and a linear layer 320 -> 10.
 
-## Training recipe
+That comes to 4,289,754 parameters in total, and the training script asserts this number.
 
-| Setting | Value |
-|---|---|
-| Training images | 45,000 (VAL5K held out) |
-| Epochs | 200 (set at the end of epoch 3 from an 80-minute budget, capped at 200) |
-| Batch size | 512, last partial batch dropped (87 steps per epoch) |
-| Optimizer | SGD, momentum 0.9, Nesterov, weight decay 5e-4 on conv and linear weights (none on BN and biases) |
-| Learning rate | linear warm-up 0.04 -> 0.4 over 3 epochs, then linear decay to 0 |
-| Loss | cross-entropy, label smoothing 0.1 |
-| Augmentation (GPU, per batch) | reflect-pad 4 + random 32x32 crop, horizontal flip p = 0.5, Cutout 16x16 (p = 1) |
-| Regularization | EMA of the weights, decay 0.999, started after warm-up |
-| Precision | fp16 autocast with GradScaler, channels_last |
-| Seed | 0 |
-| Hardware and time | Kaggle Tesla T4, 48.0 min of training |
+## How we trained it
 
-## Inference
+We trained on 45,000 images, holding VAL5K out. The run was 200 epochs: the script set this at the end of epoch
+3 from an 80-minute budget, capped at 200. Batch size was 512 with the last partial batch dropped, so 87 steps
+per epoch.
 
-Live weights (not EMA), average of the image and its horizontal flip. This variant was the best of
-live/EMA x none/flip on VAL5K, so the VAL5K number has a small optimistic bias (about 0.1 pp).
+The rest of the recipe:
+
+- Optimizer: SGD, momentum 0.9, Nesterov, weight decay 5e-4 on conv and linear weights (none on BN and biases).
+- Learning rate: linear warm-up 0.04 -> 0.4 over 3 epochs, then linear decay to 0.
+- Loss: cross-entropy with label smoothing 0.1.
+- Augmentation (on the GPU, per batch): reflect-pad 4 + random 32x32 crop, horizontal flip with p = 0.5, and
+  Cutout 16x16 (p = 1).
+- EMA of the weights with decay 0.999, started after warm-up.
+- fp16 autocast with GradScaler, channels_last.
+- Seed 0.
+
+Training took 48.0 min on a Kaggle Tesla T4.
+
+For inference we used the live weights (not EMA) and averaged the image with its horizontal flip. We picked this
+because it was the best of live/EMA x none/flip on VAL5K, which means the VAL5K number has a small optimistic
+bias (about 0.1 pp).
 
 ## Results
 
 | Variant | VAL5K |
 |---|---:|
 | live, one view | 96.16 |
-| **live, flip2 (submitted)** | **96.46** |
+| live, flip2 (submitted) | 96.46 |
 | live, tta6 | 96.62 |
 | EMA, one view | 95.38 |
 | EMA, flip2 | 95.42 |
 
-Public LB 0.866.
+The public LB score was 0.866.
 
-## Reproduce
+Two things stood out. The EMA weights were worse than the live weights in this run (95.42 vs 96.46 with flip2).
+And the large gap between VAL5K (96.5) and public (86.6) shows how strong the test shift is.
+
+## Reproducing the submission
 
 From the repo root, after `python tools/pack_data.py`:
 
@@ -67,15 +69,15 @@ python strat_1_infer.py --config strat_1_config.yaml --data ../../packed/cifar_c
 sha256sum repro/submission.csv outputs/submission.csv
 ```
 
-Checked on 2026-11-03 on a CPU (90 s): the rebuilt file is byte-identical to the submitted one.
+We checked this on 2026-11-03 on a CPU (90 s), and the rebuilt file is byte-identical to the submitted one.
 
-From scratch (GPU):
+To train from scratch (GPU):
 
 ```bash
 python strat_1_train.py --config strat_1_config.yaml --data ../../packed/cifar_comp_v1.npz --out outputs --time-budget-min 80
 ```
 
-## Files
+## What's in the folder
 
 | File | Content |
 |---|---|
@@ -87,11 +89,6 @@ python strat_1_train.py --config strat_1_config.yaml --data ../../packed/cifar_c
 | `outputs/model.pt` | submitted weights (live) |
 | `outputs/submission.csv` | the submitted file |
 | `outputs/summary.json`, `outputs/metrics.jsonl` | run summary and per-epoch metrics |
-
-## Notes
-
-- EMA weights were worse than the live weights in this run (95.42 vs 96.46 with flip2).
-- The large gap between VAL5K (96.5) and public (86.6) shows how strong the test shift is.
 
 ## References
 
